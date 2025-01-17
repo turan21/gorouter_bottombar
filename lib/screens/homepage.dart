@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:router_navbar/screens/newspage.dart';
 import 'package:router_navbar/screens/settingspage.dart';
 
 class HomePage extends StatefulWidget {
@@ -19,7 +18,7 @@ class _HomePageState extends State<HomePage> {
         context.go('/');
         break;
       case 1:
-        context.go('${SettingsPage.route}');
+        context.go(SettingsPage.route);
         break;
     }
     setState(() {
