@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:router_navbar/models/User.dart';
 import 'package:router_navbar/models/difficulty.dart';
 import 'package:router_navbar/widgets/quiz_card.dart';
 
@@ -25,6 +26,16 @@ class _NewspageState extends State<Newspage> {
           print("Quiz tapped");
         }),
   ];
+  List<User> users = [
+    User(id: '15', name: 'Eldos', age: 17, salary: 15000, taxClass: 1),
+    User(
+        id: '16',
+        name: 'Daniyar',
+        age: 18,
+        salary: 12000,
+        taxClass: 1,
+        ieltsScore: 6.5),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +45,15 @@ class _NewspageState extends State<Newspage> {
       body: SafeArea(
           child: SingleChildScrollView(
         child: Column(
-          children: [QuizCard(quiz: quizes.first)],
+          children: [
+            ...users.map((el) => ListTile(
+                  title: Text(el.name),
+                  subtitle: Text(
+                    el.age.toString(),
+                  ),
+                  trailing: Text("${el.ieltsScore ?? "no"}"),
+                ))
+          ],
         ),
       )),
     );

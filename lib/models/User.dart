@@ -4,12 +4,14 @@ class User {
   final int age;
   final double salary;
   final int taxClass;
+  final double? ieltsScore;
 
   User(
       {required this.id,
       required this.name,
       required this.age,
       required this.salary,
+      this.ieltsScore,
       this.taxClass = 0});
 
   void displayName() {
