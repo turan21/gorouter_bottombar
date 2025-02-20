@@ -90,8 +90,8 @@ class SettingsPage extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: 8.0),
       child: Column(
         children: [
-          Image.asset('assets/product_placeholder.png',
-              height: 100, width: 100, fit: BoxFit.cover),
+          // Image.asset('assets/product_placeholder.png',
+          //     height: 100, width: 100, fit: BoxFit.cover),
           Text(title),
           Text(price),
         ],

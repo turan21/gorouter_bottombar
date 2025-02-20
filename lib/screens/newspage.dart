@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:pocketbase/pocketbase.dart';
 import 'package:router_navbar/models/User.dart';
 import 'package:router_navbar/models/difficulty.dart';
 import 'package:router_navbar/widgets/quiz_card.dart';
 
+import '../models/Car.dart';
 import '../models/Quiz.dart';
 
 class Newspage extends StatefulWidget {
@@ -14,28 +16,27 @@ class Newspage extends StatefulWidget {
 }
 
 class _NewspageState extends State<Newspage> {
-  List<Quiz> quizes = [
-    Quiz(
-        count: 15,
-        diff: QuizDifficulty.low,
-        imageUrl:
-            'https://images.prismic.io/prodigy-website/3b23b533-c408-4380-bce6-0820b89131e9_math-on-board.jpeg?auto=compress%2Cformat&rect=0%2C874%2C6048%2C2016&w=1920&h=640&fit=max',
-        title: "Math 1",
-        subtitle: "Trigonometry",
-        onTap: () {
-          print("Quiz tapped");
-        }),
-  ];
-  List<User> users = [
-    User(id: '15', name: 'Eldos', age: 17, salary: 15000, taxClass: 1),
-    User(
-        id: '16',
-        name: 'Daniyar',
-        age: 18,
-        salary: 12000,
-        taxClass: 1,
-        ieltsScore: 6.5),
-  ];
+  late Future<List<Car>> _cars;
+  @override
+  void initState() {
+    _cars = _fetchCars();
+    super.initState();
+  }
+
+  Future<List<Car>> _fetchCars() async {
+    try {
+      final pb = PocketBase('https://restaurant-menu.fly.dev');
+
+      final records = await pb
+          .collection('cars')
+          .getFullList(sort: '-created', expand: 'category');
+      List<Car> cars = records.map((e) => Car.fromJson(e.toJson())).toList();
+      return cars;
+    } catch (e) {
+      throw Exception('Failed to fetch quiz details: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,19 +44,26 @@ class _NewspageState extends State<Newspage> {
         title: Text("Tests"),
       ),
       body: SafeArea(
-          child: SingleChildScrollView(
-        child: Column(
-          children: [
-            ...users.map((el) => ListTile(
-                  title: Text(el.name),
-                  subtitle: Text(
-                    el.age.toString(),
-                  ),
-                  trailing: Text("${el.ieltsScore ?? "no"}"),
-                ))
-          ],
-        ),
-      )),
+        child: FutureBuilder(
+            future: _cars,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                return const Center(child: Text('No news available.'));
+              }
+              final cars = snapshot.data!;
+              return ListView.builder(
+                itemCount: cars.length,
+                itemBuilder: (context, index) => ListTile(
+                  title: Text(cars[index].title),
+                  subtitle: Text(cars[index].category?.title ?? "asd"),
+                ),
+              );
+            }),
+      ),
     );
   }
 }
