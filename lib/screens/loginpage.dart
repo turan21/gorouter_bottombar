@@ -34,7 +34,9 @@ class _LoginPageState extends State<LoginPage> {
         await pocketBaseService.saveToken(authData.token);
         context.pushReplacement('/');
       } catch (e) {
-        throw Exception(e);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Error Login')),
+        );
       }
 
       // You would typically make an API call here
