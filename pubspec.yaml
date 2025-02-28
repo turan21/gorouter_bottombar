@@ -38,6 +38,7 @@ dependencies:
   go_router: ^14.6.2
   http: ^1.2.2
   pocketbase: ^0.22.0
+  shared_preferences: ^2.5.2
 
 dev_dependencies:
   flutter_test:

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:router_navbar/router.dart';
+import 'package:router_navbar/service/pocketbase_service.dart';
 
-void main() {
+void main() async {
+  await pocketBaseService.initAuth();
   runApp(const MyApp());
 }
 
