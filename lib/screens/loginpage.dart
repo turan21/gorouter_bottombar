@@ -24,7 +24,6 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> _login() async {
     if (_formKey.currentState?.validate() ?? false) {
-      // TODO: Implement your login logic here
       try {
         final authData = await pocketBaseService.pb
             .collection('sportly_users')

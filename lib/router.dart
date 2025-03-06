@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:router_navbar/screens/daniyar_page.dart';
+import 'package:router_navbar/screens/daniyar_taskcalendar.dart';
 import 'package:router_navbar/screens/loginpage.dart';
 import 'package:router_navbar/screens/newsdetailpage.dart';
 import 'package:router_navbar/screens/newspage.dart';
@@ -78,4 +80,10 @@ final router = GoRouter(
           ]),
       GoRoute(path: '/login', builder: (context, state) => const LoginPage()),
       GoRoute(path: '/signup', builder: (context, state) => const SignupPage()),
+      GoRoute(
+          path: TaskCalendarPage.route,
+          builder: (context, state) => const TaskCalendarPage()),
+      GoRoute(
+          path: DaniyarPage.route,
+          builder: (context, state) => const DaniyarPage()),
     ]);

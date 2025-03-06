@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:router_navbar/screens/daniyar_page.dart';
+import 'package:router_navbar/screens/daniyar_taskcalendar.dart';
 import 'package:router_navbar/service/pocketbase_service.dart';
 
 class Newspage extends StatefulWidget {
@@ -41,7 +43,13 @@ class _NewspageState extends State<Newspage> {
       body: SafeArea(
           child: Column(children: [
         Text('${pocketBaseService.isAuthenticated()}'),
-        ElevatedButton(onPressed: () => logout(context), child: Text('logout'))
+        ElevatedButton(onPressed: () => logout(context), child: Text('logout')),
+        ElevatedButton(
+            onPressed: () => context.push(DaniyarPage.route),
+            child: Text('Daniyar')),
+        ElevatedButton(
+            onPressed: () => context.push(TaskCalendarPage.route),
+            child: Text('TaskCalendar'))
       ])),
     );
   }
