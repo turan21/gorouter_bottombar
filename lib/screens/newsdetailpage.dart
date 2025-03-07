@@ -14,9 +14,14 @@ class _NewsdetailpageState extends State<Newsdetailpage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.id),
+        title: Text(widget.title),
       ),
-      body: Center(child: Text(widget.title)),
+      body: Center(
+          child: Column(
+        children: [
+          Text(widget.id),
+        ],
+      )),
     );
   }
 }

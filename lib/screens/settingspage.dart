@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
   static const String route = '/settings';
 
   const SettingsPage({super.key});
+
+  @override
+  State<SettingsPage> createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,14 +19,17 @@ class SettingsPage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
-          children: [
-            buildSectionTitle('Featured Products'),
-            buildFeaturedProducts(),
-            buildSectionTitle('Categories'),
-            buildCategories(),
-            buildSectionTitle('Stores'),
-            buildStores(),
-          ],
+          children: List.generate(
+            5,
+            (index) {
+              return ListTile(
+                title: Text(index.toString()),
+                onTap: () {
+                  context.push('/news/$index', extra: {'title': 'News $index'});
+                },
+              );
+            },
+          ),
         ),
       ),
     );

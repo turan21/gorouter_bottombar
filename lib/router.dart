@@ -63,20 +63,6 @@ final router = GoRouter(
               pageBuilder: (context, state) =>
                   noTransitionPageBuilder(context, state, const SettingsPage()),
             ),
-            GoRoute(
-              path: '/news',
-              parentNavigatorKey: _shellKey,
-              pageBuilder: (context, state) {
-                return noTransitionPageBuilder(
-                  context,
-                  state,
-                  Newsdetailpage(
-                    id: state.uri.queryParameters["id"]!,
-                    title: state.uri.queryParameters["title"]!,
-                  ),
-                );
-              },
-            )
           ]),
       GoRoute(path: '/login', builder: (context, state) => const LoginPage()),
       GoRoute(path: '/signup', builder: (context, state) => const SignupPage()),
@@ -86,4 +72,16 @@ final router = GoRouter(
       GoRoute(
           path: DaniyarPage.route,
           builder: (context, state) => const DaniyarPage()),
+      GoRoute(
+        path: '/news/:id',
+        builder: (context, state) {
+          final id = state.pathParameters["id"]!;
+          final extra = state.extra as Map<String, dynamic>?;
+          final title = extra?["title"] ?? "title";
+          return Newsdetailpage(
+            id: id,
+            title: title,
+          );
+        },
+      ),
     ]);
